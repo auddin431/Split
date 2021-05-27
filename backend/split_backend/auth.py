@@ -27,7 +27,7 @@ def api_login():
     else:
         return 0
 
-@auth_bp.route('/split_api/user/create', methods=["POST"])
+@auth_bp.route('/split_api/user/create', methods=["GET", "POST"])
 def api_reg_user():
     params = request.args
     username = params.get("username")
@@ -37,16 +37,19 @@ def api_reg_user():
 
     if existing_user is not None:
         #error, username already in use
-        return 0
+        return str(999)
     else:
         new_user = User(name=username, need_to_pay=0, owed=0)
+        new_user.name = username
+        new_user.group_id = 0
         new_user.set_password(passwd)
         db.session.add(new_user)
         db.session.commit()
         session.clear()
         session["user_id"] = new_user.id
+        return str(new_user.id)
 
-    return 1 #success
+    return str(1) #success
 
 @auth_bp.before_app_request
 def load_logged_in_user():

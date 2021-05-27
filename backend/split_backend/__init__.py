@@ -4,6 +4,7 @@ Creates the backend application
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+#from flask_admin import Admin
 
 db = SQLAlchemy()
 
@@ -21,6 +22,8 @@ def create_app():
         app.register_blueprint(auth.auth_bp)
         app.register_blueprint(routes.api_bp)
         db.create_all()
+
+        #admin = Admin(app, name='microblog', template_mode='bootstrap3')
 
         return app
 

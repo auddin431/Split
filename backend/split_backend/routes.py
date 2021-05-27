@@ -7,22 +7,24 @@ api_bp = Blueprint(
 
 #create group and returns the group id
 #also creates an empty purchase object
-@api_bp.route("/split_api/create_group", methods=["POST"])
+@api_bp.route("/split_api/create_group", methods=["POST", "GET"])
 def create_group():
     #need to pass in group name and purchase name
     #group_name, purchase_name
     new_group = Group(name=request.args.get("group_name"))
+    db.session.add(new_group)
+
     new_purchase = Purchase(name=request.args.get("purchase_name"))
     new_purchase.group_id = new_group.id
     new_purchase.group = new_group
     db.session.add(new_purchase)
-    db.session.add(new_group)
+
     db.session.commit()
-    return new_group.id
+    return str(new_group.id)
 
 
 #add user to group
-@api_bp.route("/split_api/add_user_to_group", methods=["POST"])
+@api_bp.route("/split_api/add_user_to_group", methods=["POST", "GET"])
 def add_user_to_group():
     """
     Need to pass in user_id, and group_id
@@ -31,12 +33,14 @@ def add_user_to_group():
     params = request.args
     user_id = params.get("user_id")
     group_id = params.get("group_id")
-    user = User.query.filter_by(name=user_id).first()
-    group = Group.query.filter_by(id=group_id)
+
+    user = User.query.filter_by(id=user_id).first()
     user.group_id = group_id
+
+    group = Group.query.filter_by(id=group_id).first()
     user.group = group
     db.session.commit()
-    return group_id
+    return str(group_id)
 
 
 #add item reuqest for a user
@@ -102,7 +106,7 @@ def get_money_owes_others():
     return user.need_to_pay
 
 #return dict of items {item: {user: count, user2: count2}}
-@api_bp.route("/split_api/item_list"):
+@api_bp.route("/split_api/item_list")
 def item_list():
     """
     Main method to display the item list along with the amount each user
@@ -111,7 +115,25 @@ def item_list():
     :param: group id
     :return: the JSON dict descirbed above
     """
-    pass
+    d = {}
+    items = Item.name
+    for item in session.Query(Item):
+        if item.name in d.keys():
+            d[item.name][item.user.name] = item.count
+        else:
+            d[item.name] = {}
+            d[item.name][item.user.name] = item.count
+    return d
+
+#return the total amount request for an item
+#1 param: item_name
+@api_bp.route("/split_api/item_total")
+def item_total():
+    item_name = request.args.get("item_name")
+    total = 0
+    for item in session.Query(Item):
+        total += item.count
+    return total
 
 
 #calculate split - scans the reciept, gets items costs, assigns to users
