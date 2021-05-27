@@ -19,7 +19,7 @@ def create_app():
         from .models import User
 
         app.register_blueprint(auth.auth_bp)
-        app.register_blueprint(routes.api)
+        app.register_blueprint(routes.api_bp)
         db.create_all()
 
         return app

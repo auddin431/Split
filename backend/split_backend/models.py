@@ -7,6 +7,11 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
 
+class Group(db.Model):
+    __tablename__ = "groups"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), index=True, nullable=False, unique=False)
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -16,6 +21,9 @@ class User(db.Model):
     need_to_pay = db.Column(db.Integer, index=False, nullable=True, unique=False)
     owed = db.Column(db.Integer, index=False, nullable=True, unique=True)
 
+    group_id = db.Column(db.Integer, ForeignKey("groups.id"), nullable=False, index=True)
+    group = relationship("Group", backref="users", foreign_keys=["group_id"])
+
     def set_password(self, password):
         self.password = generate_password_hash(password, method="sha256")
 
@@ -24,6 +32,23 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.first_name)
+
+class Purchase(db.Model):
+    __tablename__ = 'purchases'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), index=True, nullable=False, unique=False)
+    total = db.Column(db.Integer, index=False, nullable=True, unique=True)
+
+    group_id = db.Column(db.Integer, ForeignKey("groups.id"), nullable=False, index=True)
+    group = relationship("Group", backref="purchases", foreign_keys=["group_id"])
+
+class Item(db.Model):
+    """
+    Represents an item which belongs to one purchase.
+    It has a name and a count reuqest for each user.
+    User has multiple items with different counts.
+    """
+    pass
 
 
 
