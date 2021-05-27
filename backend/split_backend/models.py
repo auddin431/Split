@@ -15,8 +15,7 @@ class Group(db.Model):
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(100), index=True, nullable=False, unique=False)
-    last_name = db.Column(db.String(100), index=True, nullable=False, unique=False)
+    name = db.Column(db.String(100), index=True, nullable=False, unique=False)
 
     need_to_pay = db.Column(db.Integer, index=False, nullable=True, unique=False)
     owed = db.Column(db.Integer, index=False, nullable=True, unique=True)
@@ -36,7 +35,7 @@ class User(db.Model):
 class Purchase(db.Model):
     __tablename__ = 'purchases'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), index=True, nullable=False, unique=False)
+    name = db.Column(db.String(100), index=True, nullable=False, unique=False) #Grocery list for May
     total = db.Column(db.Integer, index=False, nullable=True, unique=True)
 
     group_id = db.Column(db.Integer, ForeignKey("groups.id"), nullable=False, index=True)
@@ -48,7 +47,13 @@ class Item(db.Model):
     It has a name and a count reuqest for each user.
     User has multiple items with different counts.
     """
-    pass
+    __tablename__ = "items"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), index=True, nullable=False, unique=False)
+    count = db.Column(db.Integer, index=False, nullable=True, unique=True)
+
+    user_id = db.Column(db.Integer, ForeignKey("users.id"), nullable=False, index=True)
+    user = relationship("User", backref="items", foreign_keys=["user_id"])
 
 
 
