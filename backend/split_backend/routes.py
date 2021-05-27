@@ -42,9 +42,22 @@ def add_user_to_group():
     db.session.commit()
     return str(group_id)
 
+#create and item and get its id
+@api_bp.route("/split_api/create_item", methods=["POST", "GET"])
+def create_item():
+    params = request.args
+    item_name = params.get("item_name")
+    user_id = params.get("user_id")
+    user = User.query.filter_by(id=user_id).first()
+
+    item = Item(name=item_name, user_id=user_id, user=user)
+    db.session.add(item)
+    db.session.commit()
+    return str(item.id)
+
 
 #add item reuqest for a user
-@api_bp.route("/split_api/add_item", methods=["POST"])
+@api_bp.route("/split_api/add_item", methods=["POST", "GET"])
 def req_item():
     #takes in user id, item name, and amount to add for user
     #will create item if doesn't exist yet
@@ -52,18 +65,12 @@ def req_item():
     #returns item id
     params = request.args
     user_id = params.get("user_id")
-    item_name = params.get("item_name")
+    item_id = params.get("item_id")
     amount = params.get("amount")
 
-    item = Item.query.filter_by(name=item_name).first()
-    if item is None:
-        item = Item(name=item_name, count=0)
+    item = Item.query.filter_by(id=item_id).first()
     item.count += amount
-
-    user = User.query.filter_by(id=user_id).first()
-    item.user_id = user_id
-    item.user = user
-    return item.id
+    return str(item.name)
 
 #subtract item reuqest for user
 @api_bp.route("/split_api/add_item", methods=["POST"])
@@ -85,7 +92,7 @@ def sub_item():
     user = User.query.filter_by(id=user_id).first()
     item.user_id = user_id
     item.user = user
-    return item.id
+    return str(item.id)
 
 #get money other people oe a user
 @api_bp.route("/split_api/get_owed_money", methods=["POST"])
@@ -132,7 +139,8 @@ def item_total():
     item_name = request.args.get("item_name")
     total = 0
     for item in session.Query(Item):
-        total += item.count
+        if item.name == item_name:
+            total += item.count
     return total
 
 
