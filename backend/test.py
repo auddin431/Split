@@ -53,23 +53,24 @@ create_item1 = {
 }
 
 create_item2 = {
-    "user_id": int(user1_id),
+    "user_id": int(user2_id),
     "item_name": "bannana"
 }
 add_item1 = requests.get(prefix + "create_item", params=create_item1)
 add_item2 = requests.get(prefix + "create_item", params=create_item2)
 
 req_item1 = {
-    "user_id": int(user1_id),
     "item_id": int(add_item1.text),
     "amount": 3
 }
 
 req_item2 = {
-    "user_id": int(user2_id),
     "item_id": int(add_item2.text),
     "amount": 2
 }
+
+add_item1_ = requests.get(prefix + "add_item", params=req_item1)
+add_item2_ = requests.get(prefix + "add_item", params=req_item2)
 
 
 

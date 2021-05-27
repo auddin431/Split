@@ -50,7 +50,7 @@ def create_item():
     user_id = params.get("user_id")
     user = User.query.filter_by(id=user_id).first()
 
-    item = Item(name=item_name, user_id=user_id, user=user)
+    item = Item(name=item_name, user_id=user_id, user=user, count=0)
     db.session.add(item)
     db.session.commit()
     return str(item.id)
@@ -59,39 +59,28 @@ def create_item():
 #add item reuqest for a user
 @api_bp.route("/split_api/add_item", methods=["POST", "GET"])
 def req_item():
-    #takes in user id, item name, and amount to add for user
-    #will create item if doesn't exist yet
-    #user_id, item_name, amount
-    #returns item id
+    #takes in item_id, amount
     params = request.args
-    user_id = params.get("user_id")
     item_id = params.get("item_id")
-    amount = params.get("amount")
+    amount = int(params.get("amount"))
 
     item = Item.query.filter_by(id=item_id).first()
     item.count += amount
-    return str(item.name)
+    db.session.commit()
+    return str(item.id)
 
 #subtract item reuqest for user
 @api_bp.route("/split_api/add_item", methods=["POST"])
 def sub_item():
-    #takes in user id, item name, and amount to subtract for user
-    #user_id, item_name, amount
-    #returns item id
-    #does nothing if item does not exist
+    #takes in item_id, amount
     params = request.args
-    user_id = params.get("user_id")
-    item_name = params.get("item_name")
+    item_id = params.get("item_id")
     amount = params.get("amount")
 
-    item = Item.query.filter_by(name=item_name).first()
-    if item is None:
-        return -1
+    item = Item.query.filter_by(id=item_id).first()
     item.count -= amount
+    db.session.commit()
 
-    user = User.query.filter_by(id=user_id).first()
-    item.user_id = user_id
-    item.user = user
     return str(item.id)
 
 #get money other people oe a user
@@ -101,7 +90,7 @@ def get_money_owed():
     user_id = params.get("user_id")
 
     user = User.query.filter_by(id=user_id).first()
-    return user.owed
+    return str(user.owed)
 
 #get money user owes another
 @api_bp.route("/split_api/get_money_owes_others", methods=["POST"])
@@ -110,7 +99,7 @@ def get_money_owes_others():
     user_id = params.get("user_id")
 
     user = User.query.filter_by(id=user_id).first()
-    return user.need_to_pay
+    return str(user.need_to_pay)
 
 #return dict of items {item: {user: count, user2: count2}}
 @api_bp.route("/split_api/item_list")
