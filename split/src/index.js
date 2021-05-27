@@ -15,6 +15,9 @@ ReactDOM.render(
       <Route path="/welcome">
         <Welcome />
       </Route>
+      <Route path="/register">
+        <App />
+      </Route>
     </Switch>
   </Router>,
   document.getElementById("root")
