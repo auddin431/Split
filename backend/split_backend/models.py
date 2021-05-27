@@ -18,10 +18,10 @@ class User(db.Model):
     name = db.Column(db.String(100), index=True, nullable=False, unique=False)
 
     need_to_pay = db.Column(db.Integer, index=False, nullable=True, unique=False)
-    owed = db.Column(db.Integer, index=False, nullable=True, unique=True)
+    owed = db.Column(db.Integer, index=False, nullable=True, unique=False)
 
-    group_id = db.Column(db.Integer, ForeignKey("groups.id"), nullable=False, index=True)
-    group = relationship("Group", backref="users", foreign_keys=["group_id"])
+    group_id = db.Column(db.Integer, ForeignKey("groups.id"), nullable=True, index=True)
+    group = relationship("Group", backref="users", foreign_keys=[group_id])
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method="sha256")
@@ -39,7 +39,7 @@ class Purchase(db.Model):
     total = db.Column(db.Integer, index=False, nullable=True, unique=True)
 
     group_id = db.Column(db.Integer, ForeignKey("groups.id"), nullable=False, index=True)
-    group = relationship("Group", backref="purchases", foreign_keys=["group_id"])
+    group = relationship("Group", backref="purchases", foreign_keys=[group_id])
 
 class Item(db.Model):
     """
@@ -53,7 +53,7 @@ class Item(db.Model):
     count = db.Column(db.Integer, index=False, nullable=True, unique=True)
 
     user_id = db.Column(db.Integer, ForeignKey("users.id"), nullable=False, index=True)
-    user = relationship("User", backref="items", foreign_keys=["user_id"])
+    user = relationship("User", backref="items", foreign_keys=[user_id])
 
 
 
