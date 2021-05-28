@@ -3,6 +3,8 @@ import "./App.css";
 import "./index.css";
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 
 const theme = createMuiTheme({
     typography: {
@@ -16,6 +18,7 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />

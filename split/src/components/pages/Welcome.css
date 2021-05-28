@@ -1,14 +1,21 @@
 .wrapper {
   padding: 28px;
+  margin-top: 6vh;
   display: flex;
   flex-direction: column;
   text-align: center;
 }
 
-#welcome {
+.title {
   text-align: left;
 }
 
 form {
   margin-bottom: 30px;
+}
+
+.action {
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
 }
