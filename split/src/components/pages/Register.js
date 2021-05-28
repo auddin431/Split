@@ -12,7 +12,7 @@ const useStyles = makeStyles({
 
 const StyledButton = withStyles({
   root: {
-    height: 48,
+    height: "52px",
     margin: "12px 0",
     fontFamily: "'Koho', sans-serif",
     fontWeight: 600,

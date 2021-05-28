@@ -7,6 +7,8 @@ import Register from "./components/pages/Register";
 import Home from "./components/pages/Home";
 import Account from "./components/pages/Account";
 import Add from "./components/pages/Add";
+import Chat from "./components/pages/Chat";
+import GroceryList from "./components/pages/GroceryList";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -30,6 +32,12 @@ ReactDOM.render(
       </Route>
       <Route path="/add">
         <Add />
+      </Route>
+      <Route path="/chat">
+        <Chat />
+      </Route>
+      <Route path="/grocerylist">
+        <GroceryList />
       </Route>
     </Switch>
   </Router>,
