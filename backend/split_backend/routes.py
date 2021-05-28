@@ -8,12 +8,35 @@ api_bp = Blueprint(
     "api_bp", __name__
 )
 
+"""
+NOTE: in order to register users, the api_reg_user
+method in auth.py is needed.
+
+"""
+
+"""
+NOTE ON TESTING: In order to have some data to test
+without a front end, first run the flask server with
+'python wsgi.py". Then, in a seperate terminal run
+python test.py. Now, some data is populated in
+the database. Then, test_split_image can be run
+with the appropriate image.'
+
+Make sure to delete test_cat.db and image.png
+before restarting the flask server
+"""
+
+
 #create group and returns the group id
 #also creates an empty purchase object
 @api_bp.route("/split_api/create_group", methods=["POST", "GET"])
 def create_group():
-    #need to pass in group name and purchase name
-    #group_name, purchase_name
+    """
+    Create a new group. Need to pass in a group_name
+    and a purchase_name
+    ex. group_name = "roomates", purchase_name = "january_groceries"
+    :return: the new group's id
+    """
     new_group = Group(name=request.args.get("group_name"))
     db.session.add(new_group)
 
@@ -30,8 +53,9 @@ def create_group():
 @api_bp.route("/split_api/add_user_to_group", methods=["POST", "GET"])
 def add_user_to_group():
     """
-    Need to pass in user_id, and group_id
-    :return: group id is success, or -1
+    Need to pass in user_id and group_id. Adds the user to the group. This
+    is needed for future functions
+    :return: group id the user was added to
     """
     params = request.args
     user_id = params.get("user_id")
@@ -49,7 +73,13 @@ def add_user_to_group():
 #add item reuqest for a user
 @api_bp.route("/split_api/add_item", methods=["POST", "GET"])
 def req_item():
-    #takes in item_id, user_id, amount
+    """
+    Takes in a user_id, item_name, and amount. The item name
+    needs to be an exact match to what is on the recipt image.
+    The amount will overwrite any previous amount present.
+    ex. item_name = "apple", amount=3
+    :return: the id of the item requested
+    """
     params = request.args
     item_name = params.get("item_name")
     user_id = params.get("user_id")
@@ -76,6 +106,10 @@ def req_item():
 #get money other people oe a user
 @api_bp.route("/split_api/get_owed_money", methods=["POST", "GET"])
 def get_money_owed():
+    """
+    Needs a user_id
+    :return: the amount the user is owed by others
+    """
     params = request.args
     user_id = params.get("user_id")
 
@@ -85,6 +119,10 @@ def get_money_owed():
 #get money user owes another
 @api_bp.route("/split_api/get_money_owes_others", methods=["POST", "GET"])
 def get_money_owes_others():
+    """
+    Needs a user_id
+    :return: Returns the amount the user needs to pay others
+    """
     params = request.args
     user_id = params.get("user_id")
 
@@ -96,9 +134,10 @@ def get_money_owes_others():
 def item_list():
     """
     Main method to display the item list along with the amount each user
-    reuqests. This is in the format {item: {user: count, user2: count2}}
+    reuqests. This is in the format {item: {user: count, user2: count2},
+    item2: {user: count}}. Users with no items DO NOT appear with a count of 0
     amount each user
-    :param: group id
+    :param: no input necessary
     :return: the JSON dict descirbed above
     """
     d = {}
@@ -115,6 +154,12 @@ def item_list():
 #1 param: item_name
 @api_bp.route("/split_api/item_total", methods=["GET", "POST"])
 def item_total():
+    """
+    Gives the specific amount that was reuqested
+    for an item.
+    :param: item_name (exact match)
+    :return: the total number requested among all people
+    """
     item_name = request.args.get("item_name")
     items = db.session.query(Item)
     total = 0
@@ -124,8 +169,12 @@ def item_total():
     return str(total)
 
 def parse_recipt(img_path):
-    """Uses the VeryFi API to parse
-    a recipt. Returns a dict of item, price"""
+    """
+    HELPER_METHOD
+
+    Uses the VeryFi API to parse
+    a recipt. Returns a dict of item, price. This
+    is a helper method not called by the frontend"""
     veryfi_client = Client(client_id, client_secret, username, api_key)
     categories = ['Grocery', 'Utilities', 'Travel']
     # This submits document for processing (takes 3-5 seconds to get response)
@@ -139,8 +188,10 @@ def parse_recipt(img_path):
 
 def item_list_helper():
     """
+    HELPER_METHOD
+
     Identical to orginal method but used for backend, and
-    return just the dictionary
+    return just the dictionary. HELPER METHOD
     """
     d = {}
     items = db.session.query(Item)
@@ -153,6 +204,9 @@ def item_list_helper():
     return d
 
 def get_people_who_wanted_item(item_name):
+    """
+    HELPER_METHOD
+    """
     people = []
     quants = []
     items = db.session.query(Item)
@@ -167,6 +221,26 @@ def get_people_who_wanted_item(item_name):
 #takes in an image parameter, and user
 @api_bp.route("/split_api/split", methods=["GET", "POST"])
 def split():
+    """
+    Takes in an image and the user_id of the person
+    who paid. This only returns a json of what the
+    OCR managed to read, but the real work is done my modifying
+    the backend database.
+
+    This can be called by putting the file bytes in the
+    files section of the request with title image. The payer_id can be
+    passed in regularly. NOTE: this method uses payer_id, not user_id
+
+    If the recipt image should not come from the frontend and instead
+    be hard coded, insert the image in the directory above
+    this one. Then, comment out lines 222 and 224. Change the file
+    name in like 225 to the image to be read.
+
+    To get a list of all the people and the amount
+    they owe others/are owed themselves, use the method below
+    called get_people()
+    :return:
+    """
     #Read image and perform OCR and ICR
     file = request.files["image"]
     payer_id = request.args.get("payer_id")
@@ -203,6 +277,14 @@ def split():
 #get JSON of {people: {need to pay, owed}, ...}
 @api_bp.route("/split_api/get_all_people", methods=["GET", "POST"])
 def get_people():
+    """
+    Takes in nothing, but returns useful info after a split.
+    It returns all the users and the amount of money they 1)
+    need to pay others and 2) the amount others need to pay them, in that order.
+
+    ex. {person_name: [need to pay, owed], person2_name: [need to pay, owed], ...}
+    :return: JSON data
+    """
     d = {}
     all_people = db.session.query(User)
     for person in all_people:
