@@ -35,28 +35,31 @@ const Welcome = () => {
   const passwordHandler = (e) => {
     setPassword(e.target.value);
   };
+  
   return (
-    <>
-      <div className="wrapper">
-        <h1>Welcome to Split.</h1>
+    <div className="wrapper">
+        <h1 id="welcome">Welcome to Split.</h1>
         <form noValidate autoComplete="off">
-          <StyledTextField id="email" label="Email" onChange={emailHandler} />
+          <StyledTextField 
+            id="email" 
+            label="Email" 
+            onChange={emailHandler} 
+            fullWidth
+          />
           <StyledTextField
             id="pass"
             label="Password"
             onChange={passwordHandler}
+            fullWidth
           />
         </form>
-      </div>
-      <div className="wrapper">
         <StyledButton className="colorTest" variant="contained">
           Log In
         </StyledButton>
         <p style={{ textAlign: "center" }}>
           Don't have an account? <Link to="/register">Sign Up</Link>
         </p>
-      </div>
-    </>
+    </div>
   );
 };
 

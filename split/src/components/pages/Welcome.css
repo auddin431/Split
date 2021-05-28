@@ -2,8 +2,13 @@
   padding: 28px;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
-.colorTest {
-  margin-top: 10px;
+#welcome {
+  text-align: left;
+}
+
+form {
+  margin-bottom: 30px;
 }
