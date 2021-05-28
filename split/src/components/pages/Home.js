@@ -1,7 +1,8 @@
-import React from "react";
 import Owe from "../Owe";
 import { Helmet } from "react-helmet";
 import "./Home.css";
+import React from "react";
+import Navigation from "../Navigation"
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
           height: "70vh",
         }}
       ></div>
+      <Navigation page="home"/>
     </React.Fragment>
   );
 };

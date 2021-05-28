@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+
+const useStyles = makeStyles({
+  root: {
+    marginBottom: "18px",
+  },
+});
 
 const StyledButton = withStyles({
   root: {
-    background: "linear-gradient(45deg, #000 30%, #000 90%)",
-    borderRadius: 3,
-    border: 0,
-    color: "white",
-    height: 48,
-    padding: "0 30px",
+    height: "52px",
+    margin: "12px 0",
+    fontFamily: "'Koho', sans-serif",
+    fontWeight: 600,
+    fontSize: "16px",
   },
   label: {
     textTransform: "capitalize",
@@ -32,31 +37,48 @@ const numberHandler = () => {
 };
 
 const Register = () => {
+  const classes = useStyles();
+
   return (
-    <>
       <div className="wrapper">
-        <h1>Join the family.</h1>
+        <h1 className="title">Join the family.</h1>
         <form noValidate autoComplete="off">
-          <TextField id="full name" label="full name" onChange={nameHandler} />
-          <TextField id="email" label="email" onChange={emailHandler} />
+          <TextField 
+            id="name" 
+            className={classes.root}
+            label="Full Name" 
+            onChange={nameHandler} 
+            fullWidth
+          />
+          <TextField 
+            id="email" 
+            className={classes.root}
+            label="Email" 
+            onChange={emailHandler} 
+            fullWidth
+          />
           <TextField
             id="password"
-            label="password"
+            className={classes.root}
+            label="Password"
             type="password"
             onChange={passwordHandler}
+            fullWidth
           />
-          <TextField id="number" label="number" onChange={numberHandler} />
+          <TextField 
+            id="number" 
+            label="Phone Number" 
+            onChange={numberHandler} 
+            fullWidth
+          />
         </form>
-      </div>
-      <div className="wrapper">
-        <StyledButton className="colorTest" variant="contained">
+        <StyledButton variant="contained" color="primary">
           Register
         </StyledButton>
-        <p style={{ textAlign: "center" }}>
-          Already have an account? <Link to="/welcome">Log In</Link>
+        <p>
+          Already have an account? <Link className="action" to="/welcome">Log In.</Link>
         </p>
       </div>
-    </>
   );
 };
 

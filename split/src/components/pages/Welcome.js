@@ -1,33 +1,34 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import "./Welcome.css";
 
+const useStyles = makeStyles({
+  root: {
+    marginBottom: "18px",
+  },
+});
+
 const StyledButton = withStyles({
   root: {
-    background: "linear-gradient(45deg, #000 30%, #000 90%)",
-    borderRadius: 3,
-    border: 0,
-    color: "white",
-    height: 48,
-    padding: "0 30px",
+    height: "52px",
+    margin: "12px 0",
+    fontFamily: "'Koho', sans-serif",
+    fontWeight: 600,
+    fontSize: "16px",
   },
   label: {
     textTransform: "capitalize",
   },
 })(Button);
 
-const StyledTextField = withStyles({
-  root: {
-    color: "linear-gradient(45deg, #ff0000 30%, #ff0000 90%)",
-  },
-})(TextField);
-
 const Welcome = () => {
+  const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const emailHandler = (e) => {
     setEmail(e.target.value);
     console.log(e.target.value);
@@ -35,29 +36,33 @@ const Welcome = () => {
   const passwordHandler = (e) => {
     setPassword(e.target.value);
   };
+  
   return (
-    <>
-      <div className="wrapper">
-        <h1>Welcome to Split.</h1>
+    <div className="wrapper">
+        <h1 className="title">Welcome to Split.</h1>
         <form noValidate autoComplete="off">
-          <StyledTextField id="email" label="Email" onChange={emailHandler} />
-          <StyledTextField
+          <TextField 
+            id="email"
+            className={classes.root}
+            label="Email" 
+            onChange={emailHandler} 
+            fullWidth
+          />
+          <TextField
             id="pass"
             label="Password"
             type="password"
             onChange={passwordHandler}
+            fullWidth
           />
         </form>
-      </div>
-      <div className="wrapper">
-        <StyledButton className="colorTest" variant="contained">
+        <StyledButton variant="contained" color="primary">
           Log In
         </StyledButton>
-        <p style={{ textAlign: "center" }}>
-          Don't have an account? <Link to="/register">Sign Up</Link>
+        <p>
+          Don't have an account? <Link className="action" to="/register">Sign Up.</Link>
         </p>
-      </div>
-    </>
+    </div>
   );
 };
 
