@@ -1,5 +1,6 @@
 """
-Python script to test if the backend is working
+Python script to test if the backend is working.
+Puts in needed data
 """
 import requests
 
@@ -14,7 +15,7 @@ user2_params = {
 }
 
 user3_params = {
-    "username": "austin",
+    "username": "sarah",
     "password": "abhi"
 }
 
@@ -112,18 +113,6 @@ it_name = {
 }
 
 item_total = requests.get(prefix + "item_total", params=it_name)
-print(item_total.text)
-
-
-#test image
-my_img = {
-    "image": open("rec.png", "rb"),
-}
-p = {
-    "payer_id": int(user1_id)
-}
-split = requests.get(prefix + "split", files=my_img, params=p)
-print(split.text)
 
 
 
