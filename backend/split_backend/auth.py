@@ -9,26 +9,12 @@ auth_bp = Blueprint(
     "auth_bp", __name__
 )
 
-@auth_bp.route("/split_api/logout", methods=["POST"])
-def api_logout():
-    session.clear()
-    return 1
-
-@auth_bp.route("/split_api/user/login", methods=["POST"])
-def api_login():
-    params = request.args
-    username = params.get("username")
-    passwd = params.get("password")
-    user = User.query.filter_by(name=username).first()
-    if user and user.check_password(password=passwd):
-        session.clear()
-        session["user_id"] = user.id
-        return user.id
-    else:
-        return 0
-
 @auth_bp.route('/split_api/user/create', methods=["GET", "POST"])
 def api_reg_user():
+    """
+    Register a user by providing a username and password
+    :return: 999 if already exists, or the new user id is success
+    """
     params = request.args
     username = params.get("username")
     passwd = params.get("password")
