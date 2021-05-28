@@ -49,6 +49,7 @@ const Welcome = () => {
           <StyledTextField
             id="pass"
             label="Password"
+            type="password"
             onChange={passwordHandler}
             fullWidth
           />
