@@ -1,6 +1,8 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import InfoBar from '../InfoBar'
+import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Logo from '../../images/logo.png'
@@ -8,9 +10,12 @@ import Logo from '../../images/logo.png'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import PlusIcon from '../../images/plus.svg'
+import MinusIcon from '../../images/minus.svg'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +38,6 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
     fontFamily: "'KoHo', sans-serif",
   },
   nested: {
@@ -42,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NestedList = () => {
+const NestedList = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -56,27 +59,23 @@ const NestedList = () => {
       className={classes.list}
     >
       <ListItem button onClick={handleClick}>
-        <ListItemText primary="Sent mail" secondary="Details"/>
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText primary={props.itemName} secondary={props.cost}/>
+        <ListItemSecondaryAction>
+          <IconButton edge="end" onClick="">
+            <img src={MinusIcon} alt="Minus sign inside circle."/>
+          </IconButton>
+        </ListItemSecondaryAction>
+        <IconButton edge="end" onClick="">
+            <img src={PlusIcon} alt="Plus sign inside circle."/>
+        </IconButton>
+
+        <h3 className={classes.quantity}>{props.quantity}</h3>
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}>
-            <ListItemText primary="Starred" secondary="Details"/>
-          </ListItem>
-        </List>
-      </Collapse>
-
-      <ListItem button onClick={handleClick}>
-        <ListItemText primary="Inbox" secondary="Details"/>
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemText primary="Starred" secondary="Details"/>
+            <ListItemText primary={props.name} secondary={props.owed}/>
           </ListItem>
         </List>
       </Collapse>
@@ -130,7 +129,7 @@ const GroceryList = () => {
   return (
     <>
       <InfoBar title="Grocery List" href="./chat" />
-      <NestedList />
+      <NestedList itemName="Apples" cost="2.99" name="First Last" owed="2.99"/>
       <Buttons />
     </>
   );
