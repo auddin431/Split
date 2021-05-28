@@ -233,8 +233,8 @@ def split():
 
     If the recipt image should not come from the frontend and instead
     be hard coded, insert the image in the directory above
-    this one. Then, comment out lines 222 and 224. Change the file
-    name in like 225 to the image to be read.
+    this one. Then, comment out lines 245 and 247. Change the file
+    name in like 248 to the image to be read.
 
     To get a list of all the people and the amount
     they owe others/are owed themselves, use the method below
