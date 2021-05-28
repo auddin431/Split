@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import Welcome from "./components/pages/Welcome";
 import Register from "./components/pages/Register";
+import Home from "./components/pages/Home";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -18,6 +19,9 @@ ReactDOM.render(
       </Route>
       <Route path="/register">
         <Register />
+      </Route>
+      <Route path="/home">
+        <Home />
       </Route>
     </Switch>
   </Router>,
