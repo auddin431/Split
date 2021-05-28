@@ -1,12 +1,12 @@
 import React from "react";
 import Navigation from "../Navigation"
 
-const Home = () => {
+const Add = () => {
   return (
     <div>
-      <Navigation page="home"/>
+      <Navigation />
     </div>
   );
 };
 
-export default Home;
+export default Add;

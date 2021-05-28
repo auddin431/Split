@@ -5,6 +5,8 @@ import App from "./App";
 import Welcome from "./components/pages/Welcome";
 import Register from "./components/pages/Register";
 import Home from "./components/pages/Home";
+import Account from "./components/pages/Account";
+import Add from "./components/pages/Add";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -22,6 +24,12 @@ ReactDOM.render(
       </Route>
       <Route path="/home">
         <Home />
+      </Route>
+      <Route path="/account">
+        <Account />
+      </Route>
+      <Route path="/add">
+        <Add />
       </Route>
     </Switch>
   </Router>,

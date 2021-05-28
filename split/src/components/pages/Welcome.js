@@ -13,12 +13,7 @@ const useStyles = makeStyles({
 
 const StyledButton = withStyles({
   root: {
-    background: "linear-gradient(45deg, #000 30%, #000 90%)",
-    borderRadius: 3,
-    border: 0,
-    color: "white",
     height: 48,
-    padding: "0 30px",
     margin: "12px 0",
     fontFamily: "'Koho', sans-serif",
     fontWeight: 600,
@@ -61,7 +56,7 @@ const Welcome = () => {
             fullWidth
           />
         </form>
-        <StyledButton variant="contained">
+        <StyledButton variant="contained" color="primary">
           Log In
         </StyledButton>
         <p>
