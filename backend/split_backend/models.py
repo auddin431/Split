@@ -50,7 +50,7 @@ class Item(db.Model):
     __tablename__ = "items"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), index=True, nullable=False, unique=False)
-    count = db.Column(db.Integer, index=False, nullable=True, unique=True)
+    count = db.Column(db.Integer, index=False, nullable=True, unique=False)
 
     user_id = db.Column(db.Integer, ForeignKey("users.id"), nullable=False, index=True)
     user = relationship("User", backref="items", foreign_keys=[user_id])
