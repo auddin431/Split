@@ -2,7 +2,7 @@ import Owe from "../Owe";
 import { Helmet } from "react-helmet";
 import "./Home.css";
 import React from "react";
-import Navigation from "../Navigation"
+import Navigation from "../Navigation";
 
 const Home = () => {
   return (
@@ -19,8 +19,11 @@ const Home = () => {
           borderRadius: "25px",
           height: "70vh",
         }}
-      ></div>
-      <Navigation page="home"/>
+      >
+        <h1>Groups</h1>
+        <h3>Roommates</h3>
+      </div>
+      <Navigation page="home" />
     </React.Fragment>
   );
 };

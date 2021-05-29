@@ -4,12 +4,14 @@ Creates the backend application
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 #from flask_admin import Admin
 
 db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app.config.from_pyfile('config.py')
 
     db.init_app(app)

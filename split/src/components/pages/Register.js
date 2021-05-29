@@ -40,45 +40,48 @@ const Register = () => {
   const classes = useStyles();
 
   return (
-      <div className="wrapper">
-        <h1 className="title">Join the family.</h1>
-        <form noValidate autoComplete="off">
-          <TextField 
-            id="name" 
-            className={classes.root}
-            label="Full Name" 
-            onChange={nameHandler} 
-            fullWidth
-          />
-          <TextField 
-            id="email" 
-            className={classes.root}
-            label="Email" 
-            onChange={emailHandler} 
-            fullWidth
-          />
-          <TextField
-            id="password"
-            className={classes.root}
-            label="Password"
-            type="password"
-            onChange={passwordHandler}
-            fullWidth
-          />
-          <TextField 
-            id="number" 
-            label="Phone Number" 
-            onChange={numberHandler} 
-            fullWidth
-          />
-        </form>
-        <StyledButton variant="contained" color="primary">
-          Register
-        </StyledButton>
-        <p>
-          Already have an account? <Link className="action" to="/welcome">Log In.</Link>
-        </p>
-      </div>
+    <div className="wrapper">
+      <h1 className="title">Join the family.</h1>
+      <form noValidate autoComplete="off">
+        <TextField
+          id="name"
+          className={classes.root}
+          label="Full Name"
+          onChange={nameHandler}
+          fullWidth
+        />
+        <TextField
+          id="email"
+          className={classes.root}
+          label="Email"
+          onChange={emailHandler}
+          fullWidth
+        />
+        <TextField
+          id="password"
+          className={classes.root}
+          label="Password"
+          type="password"
+          onChange={passwordHandler}
+          fullWidth
+        />
+        <TextField
+          id="number"
+          label="Phone Number"
+          onChange={numberHandler}
+          fullWidth
+        />
+      </form>
+      <StyledButton variant="contained" color="primary">
+        Register
+      </StyledButton>
+      <p>
+        Already have an account?{" "}
+        <Link className="action" to="/welcome">
+          Log In.
+        </Link>
+      </p>
+    </div>
   );
 };
 

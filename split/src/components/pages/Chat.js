@@ -1,9 +1,9 @@
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import InfoBar from '../InfoBar'
-import Button from '@material-ui/core/Button';
-import ListIcon from '@material-ui/icons/List';
-import Logo from '../../images/logo.png'
+import { makeStyles } from "@material-ui/core/styles";
+import InfoBar from "../InfoBar";
+import Button from "@material-ui/core/Button";
+import ListIcon from "@material-ui/icons/List";
+import Logo from "../../images/logo.png";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
     width: "100vw",
     display: "flex",
     justifyContent: "center",
-  }
+  },
 }));
 
 const Buttons = () => {
@@ -33,35 +33,35 @@ const Buttons = () => {
     <div className={classes.buttons}>
       <input
         type="file"
-        accept="image/*" 
+        accept="image/*"
         capture="camera"
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         id="photoInput"
       />
       <label htmlFor="photoInput">
-        <Button 
-          variant="contained" 
-          color="primary" 
+        <Button
+          variant="contained"
+          color="primary"
           className={classes.root}
-          style={{ "marginRight": "12px" }}
+          style={{ marginRight: "12px" }}
           component="span"
         >
-          <img 
-            src={Logo} 
+          <img
+            src={Logo}
             alt="Split Logo"
             height="24px"
-            style={{ "marginRight": "10px" }}
+            style={{ marginRight: "10px" }}
           />
           Scan & Split
         </Button>
-      </label> 
+      </label>
 
-      <Button 
-        variant="outlined" 
-        color="primary" 
+      <Button
+        variant="outlined"
+        color="primary"
         className={classes.root}
         startIcon={<ListIcon />}
-        href="./list"
+        href="./grocerylist"
       >
         View List
       </Button>
@@ -72,11 +72,15 @@ const Buttons = () => {
 const Chat = (props) => {
   return (
     <>
-      <InfoBar 
-        title={props.group ? props.group : "Roommates"} 
-        href="./home" 
-        image="true" 
-        placeholder="true"/>
+      <InfoBar
+        title={props.group ? props.group : "Roommates"}
+        href="./home"
+        image="true"
+        placeholder="true"
+      />
+      <h2>Sam</h2>
+      <h2>Bill</h2>
+      <h2>Sarah</h2>
       <Buttons />
     </>
   );
