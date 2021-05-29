@@ -3,7 +3,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import "./Welcome.css";
 
 const useStyles = makeStyles({
   root: {
@@ -15,7 +14,6 @@ const StyledButton = withStyles({
   root: {
     height: "52px",
     margin: "12px 0",
-    fontFamily: "'Koho', sans-serif",
     fontWeight: 600,
     fontSize: "16px",
   },
@@ -24,46 +22,63 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-const Welcome = () => {
-  const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const nameHandler = () => {
+  return;
+};
+const emailHandler = () => {
+  return;
+};
+const passwordHandler = () => {
+  return;
+};
+const numberHandler = () => {
+  return;
+};
 
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-    console.log(e.target.value);
-  };
-  const passwordHandler = (e) => {
-    setPassword(e.target.value);
-  };
-  
+const Register = () => {
+  const classes = useStyles();
+
   return (
-    <div className="wrapper">
-        <h1 className="title">Welcome to Split.</h1>
+      <div className="wrapper">
+        <h1 className="title">Join the family.</h1>
         <form noValidate autoComplete="off">
           <TextField 
-            id="email"
+            id="name" 
+            className={classes.root}
+            label="Full Name" 
+            onChange={nameHandler} 
+            fullWidth
+          />
+          <TextField 
+            id="email" 
             className={classes.root}
             label="Email" 
             onChange={emailHandler} 
             fullWidth
           />
           <TextField
-            id="pass"
+            id="password"
+            className={classes.root}
             label="Password"
             type="password"
             onChange={passwordHandler}
             fullWidth
           />
+          <TextField 
+            id="number" 
+            label="Phone Number" 
+            onChange={numberHandler} 
+            fullWidth
+          />
         </form>
         <StyledButton variant="contained" color="primary">
-          Log In
+          Register
         </StyledButton>
         <p>
-          Don't have an account? <Link className="action" to="/register">Sign Up.</Link>
+          Already have an account? <Link className="action" to="/welcome">Log In.</Link>
         </p>
-    </div>
+      </div>
   );
 };
 
-export default Welcome;
+export default Register;

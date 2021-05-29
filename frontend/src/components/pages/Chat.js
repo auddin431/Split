@@ -10,7 +10,6 @@ const useStyles = makeStyles(() => ({
     height: "42px",
     margin: "12px 0",
     padding: "9px 21px",
-    fontFamily: "'KoHo', sans-serif",
     fontWeight: 600,
     fontSize: "16px",
     textTransform: "capitalize",

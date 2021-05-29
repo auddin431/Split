@@ -1,5 +1,5 @@
 import requests
-prefix = "http://0.0.0.0:5000/split_api/"
+prefix = "http://localhost:5000/split_api/"
 #test image
 my_img = {
     "image": open("rec.png", "rb"),

@@ -290,5 +290,3 @@ def get_people():
     for person in all_people:
         d[person.name] = [person.need_to_pay, person.owed]
     return json.dumps(d)
-
-

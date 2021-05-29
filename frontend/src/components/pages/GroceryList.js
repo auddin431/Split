@@ -12,7 +12,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Collapse from '@material-ui/core/Collapse';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 import PlusIcon from '../../images/plus.svg'
 import MinusIcon from '../../images/minus.svg'
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     height: "42px",
     margin: "12px 0",
     padding: "9px 21px",
-    fontFamily: "'KoHo', sans-serif",
     fontWeight: 600,
     fontSize: "16px",
     textTransform: "capitalize",
@@ -38,11 +36,14 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     width: '100%',
-    fontFamily: "'KoHo', sans-serif",
   },
   nested: {
     paddingLeft: theme.spacing(3),
   },
+  actions: {
+    display: 'flex',
+    flexDirection: 'row',
+  }
 }));
 
 const NestedList = (props) => {
@@ -60,16 +61,17 @@ const NestedList = (props) => {
     >
       <ListItem button onClick={handleClick}>
         <ListItemText primary={props.itemName} secondary={props.cost}/>
-        <ListItemSecondaryAction>
+        <ListItemSecondaryAction className={classes.actions}>
           <IconButton edge="end" onClick="">
             <img src={MinusIcon} alt="Minus sign inside circle."/>
           </IconButton>
-        </ListItemSecondaryAction>
-        <IconButton edge="end" onClick="">
+          <Typography variant="h3" className={classes.quantity}>
+            {props.quantity}
+          </Typography>
+          <IconButton edge="end" onClick="">
             <img src={PlusIcon} alt="Plus sign inside circle."/>
         </IconButton>
-
-        <h3 className={classes.quantity}>{props.quantity}</h3>
+        </ListItemSecondaryAction>
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -125,7 +127,15 @@ const Buttons = () => {
   );
 };
 
+function testAPI() {
+  fetch('/split_api/item_list')
+  .then(response => response.json())
+  .then(data => console.log(data));
+}
+
 const GroceryList = () => {
+  testAPI()
+
   return (
     <>
       <InfoBar title="Grocery List" href="./chat" />

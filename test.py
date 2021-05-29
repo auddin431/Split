@@ -20,7 +20,7 @@ user3_params = {
 }
 
 # test user creation and login
-prefix = "http://0.0.0.0:5000/split_api/"
+prefix = "http://localhost:5000/split_api/"
 user1_reg = requests.get(prefix + "user/create", params=user1_params)
 user1_id = user1_reg.text
 
